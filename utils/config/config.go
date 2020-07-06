@@ -1,8 +1,9 @@
 package config
 
 import (
-	"fmt"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/spf13/viper"
 )
 
 func init() {
@@ -15,5 +16,8 @@ func init() {
 // 3. 配置文件 settings.yaml
 // 4. 默认值
 func Setup(path string) {
-	viper.SetConfigFile()
+	viper.SetConfigFile(path)
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal("没有找到配置文件: ", path, err.Error)
+	}
 }
